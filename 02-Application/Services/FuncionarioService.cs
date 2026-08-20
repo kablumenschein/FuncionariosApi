@@ -76,10 +76,31 @@ namespace _02_Application.Services
             };
         }
 
-        public Task UpdateAsync(int id, FuncionarioInputDto dto)
-            => throw new NotImplementedException();
+        public async Task UpdateAsync(int id, FuncionarioInputDto dto)
+        {
+            var funcionario = await _repository.GetByIdAsync(id);
 
-        public Task DeleteAsync(int id)
-            => throw new NotImplementedException();
+            if (funcionario == null)
+                throw new KeyNotFoundException();
+
+            funcionario.Nome = dto.Nome;
+            funcionario.Cargo = dto.Cargo;
+            funcionario.Salario = dto.Salario;
+            funcionario.Departamento = dto.Departamento;
+
+            _repository.Update(funcionario);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var funcionario = await _repository.GetByIdAsync(id);
+
+            if (funcionario == null)
+                throw new KeyNotFoundException();
+
+            _repository.Delete(funcionario);
+            await _repository.SaveChangesAsync();
+        }
     }
 }

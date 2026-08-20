@@ -42,5 +42,33 @@ namespace _01_Presentation.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, FuncionarioInputDto dto)
+        {
+            try
+            {
+                await _service.UpdateAsync(id, dto);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _service.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
