@@ -43,8 +43,20 @@ namespace _02_Application.Services
             };
         }
 
-        public Task<IEnumerable<FuncionarioOutputDto>> GetAllAsync()
-            => throw new NotImplementedException();
+        public async Task<IEnumerable<FuncionarioOutputDto>> GetAllAsync()
+        {
+            var funcionarios = await _repository.GetAllAsync();
+
+            return funcionarios.Select(f => new FuncionarioOutputDto
+            {
+                Id = f.Id,
+                Nome = f.Nome,
+                Cargo = f.Cargo,
+                Salario = f.Salario,
+                Departamento = f.Departamento,
+                Ativo = f.Ativo
+            });
+        }
 
         public Task<FuncionarioOutputDto> GetByIdAsync(int id)
             => throw new NotImplementedException();

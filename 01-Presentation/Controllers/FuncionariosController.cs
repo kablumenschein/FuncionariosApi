@@ -21,5 +21,12 @@ namespace _01_Presentation.Controllers
             var criado = await _service.CreateAsync(dto);
             return StatusCode(201, criado);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var funcionarios = await _service.GetAllAsync();
+            return Ok(funcionarios);
+        }
     }
 }
