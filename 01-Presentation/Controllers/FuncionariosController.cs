@@ -28,5 +28,19 @@ namespace _01_Presentation.Controllers
             var funcionarios = await _service.GetAllAsync();
             return Ok(funcionarios);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var funcionario = await _service.GetByIdAsync(id);
+                return Ok(funcionario);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

@@ -58,8 +58,23 @@ namespace _02_Application.Services
             });
         }
 
-        public Task<FuncionarioOutputDto> GetByIdAsync(int id)
-            => throw new NotImplementedException();
+        public async Task<FuncionarioOutputDto> GetByIdAsync(int id)
+        {
+            var funcionario = await _repository.GetByIdAsync(id);
+
+            if (funcionario == null)
+                throw new KeyNotFoundException();
+
+            return new FuncionarioOutputDto
+            {
+                Id = funcionario.Id,
+                Nome = funcionario.Nome,
+                Cargo = funcionario.Cargo,
+                Salario = funcionario.Salario,
+                Departamento = funcionario.Departamento,
+                Ativo = funcionario.Ativo
+            };
+        }
 
         public Task UpdateAsync(int id, FuncionarioInputDto dto)
             => throw new NotImplementedException();
