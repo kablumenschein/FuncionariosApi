@@ -15,21 +15,34 @@ namespace _01_Presentation.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Criação de um novo funcionário.
+        /// </summary>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Post(FuncionarioInputDto dto)
         {
             var criado = await _service.CreateAsync(dto);
             return StatusCode(201, criado);
         }
 
+        /// <summary>
+        /// Lista de todos os funcionários cadastrados.
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             var funcionarios = await _service.GetAllAsync();
             return Ok(funcionarios);
         }
 
+        /// <summary>
+        /// Busca um funcionário específico pelo Id.
+        /// </summary>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -43,7 +56,12 @@ namespace _01_Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Atualiza os dados de um funcionário existente.
+        /// </summary>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(int id, FuncionarioInputDto dto)
         {
             try
@@ -57,7 +75,12 @@ namespace _01_Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove um funcionário existente.
+        /// </summary>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             try
